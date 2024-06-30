@@ -22,14 +22,15 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
 
 const navigation = [
   { name: 'DQScore', href: '#', icon: HomeIcon, current: true },
   { name: 'DQDrill', href: '#', icon: UsersIcon, current: false },
   { name: 'Compare', href: '#', icon: FolderIcon, current: false },
-  { name: 'Set Targets', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Settings', href: '#', icon: DocumentDuplicateIcon, current: false },
-  { name: 'Control Flow', href: '#', icon: ChartPieIcon, current: false },
+  { name: 'Set Targets', href: 'set-targets', icon: CalendarIcon, current: false },
+  { name: 'Settings', href: 'settings', icon: DocumentDuplicateIcon, current: false },
+  { name: 'Control Flow', href: 'control-flow', icon: ChartPieIcon, current: false },
 ]
 const teams = [
   { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
@@ -85,7 +86,7 @@ export default function DashboardLayout({ children }) {
                       <ul role="list" className="-mx-2 space-y-1">
                         {navigation.map((item) => (
                           <li key={item.name}>
-                            <a
+                            {/* <a
                               href={item.href}
                               className={classNames(
                                 item.current
@@ -96,12 +97,24 @@ export default function DashboardLayout({ children }) {
                             >
                               <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
                               {item.name}
-                            </a>
+                            </a> */}
+                             <Link
+                              to={item.href}
+                              className={classNames(
+                                item.current
+                                  ? 'bg-gray-800 text-white'
+                                  : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                                'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
+                              )}
+                            >
+                              <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
+                              {item.name}
+                            </Link>
                           </li>
                         ))}
                       </ul>
                     </li>
-                    <li>
+                    {/* <li>
                       <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
@@ -123,7 +136,7 @@ export default function DashboardLayout({ children }) {
                           </li>
                         ))}
                       </ul>
-                    </li>
+                    </li> */}
                     <li className="mt-auto">
                       <a
                         href="#"
@@ -157,7 +170,7 @@ export default function DashboardLayout({ children }) {
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        <a
+                        {/* <a
                           href={item.href}
                           className={classNames(
                             item.current
@@ -168,12 +181,24 @@ export default function DashboardLayout({ children }) {
                         >
                           <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
                           {item.name}
-                        </a>
+                        </a> */}
+                        <Link
+                          to={item.href}
+                          className={classNames(
+                            item.current
+                              ? 'bg-gray-800 text-white'
+                              : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                            'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
+                          )}
+                        >
+                          <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
+                          {item.name}
+                        </Link>
                       </li>
                     ))}
                   </ul>
                 </li>
-                <li>
+                {/* <li>
                   <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
@@ -195,7 +220,7 @@ export default function DashboardLayout({ children }) {
                       </li>
                     ))}
                   </ul>
-                </li>
+                </li> */}
                 <li className="mt-auto">
                   <a
                     href="#"
