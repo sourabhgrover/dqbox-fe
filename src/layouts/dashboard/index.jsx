@@ -39,7 +39,7 @@ const teams = [
 ]
 const userNavigation = [
   { name: 'Your profile', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', href: 'login' },
 ]
 
 function classNames(...classes) {
@@ -294,15 +294,15 @@ export default function DashboardLayout({ children }) {
                     {userNavigation.map((item) => (
                       <MenuItem key={item.name}>
                         {({ focus }) => (
-                          <a
-                            href={item.href}
+                          <Link
+                            to={item.href}
                             className={classNames(
                               focus ? 'bg-gray-50' : '',
                               'block px-3 py-1 text-sm leading-6 text-gray-900',
                             )}
                           >
                             {item.name}
-                          </a>
+                          </Link>
                         )}
                       </MenuItem>
                     ))}

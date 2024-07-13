@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom"
+
 export default function Login() {
+  const navigate = useNavigate()
     return (
       <>
         {/*
@@ -31,9 +34,10 @@ export default function Login() {
                   <input
                     id="email"
                     name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
+                    // type="email"
+                    type="text"
+                    // autoComplete="email"
+                    // required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -56,7 +60,7 @@ export default function Login() {
                     name="password"
                     type="password"
                     autoComplete="current-password"
-                    required
+                    // required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -65,6 +69,7 @@ export default function Login() {
               <div>
                 <button
                   type="submit"
+                  onClick={()=>(navigate("/"))}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Sign in
