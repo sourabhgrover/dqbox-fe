@@ -75,7 +75,7 @@ export default function SetTargets() {
           (tab) =>
             tab.name === currentTab && (
               <div key={tab.name}>
-                <p>{tab.content}</p>
+                <div>{tab.content}</div>
               </div>
             )
         )}
