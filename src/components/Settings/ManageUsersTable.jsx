@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { makeData, makeUsersData } from "./makeData";
+import Pagination from "../common/Pagination";
 
 export default function ManageUsersTable() {
   const [data, setData] = useState(() => makeUsersData(5_000));
@@ -146,6 +147,7 @@ export default function ManageUsersTable() {
                   })}
                 </tbody>
               </table>
+              <Pagination table={table} />
             </div>
           </div>
         </div>
