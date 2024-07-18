@@ -1,8 +1,9 @@
 import React from 'react'
+import ManageDqRulesTable from './ManageDqRulesTable'
 
 const ManageDQRules = () => {
   return (
-    <div>ManageDQRules</div>
+    <ManageDqRulesTable />
   )
 }
 
