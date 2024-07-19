@@ -56,9 +56,9 @@ export default function ManageUsersTable() {
     getFilteredRowModel: getFilteredRowModel(), //client side filtering
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: false,
+    // debugTable: true,
+    // debugHeaders: true,
+    // debugColumns: false,
   });
 
   return (

@@ -9,8 +9,8 @@ import {
 import { useMemo, useState } from "react";
 import { makeData, makeUsersData, makeDqRules } from "./makeData";
 import Pagination from "../common/Pagination";
-import { ArrowLongDownIcon, ArrowLongUpIcon } from '@heroicons/react/20/solid'
-
+import { ArrowLongDownIcon, ArrowLongUpIcon } from "@heroicons/react/20/solid";
+import Filter from "../common/Filter";
 
 export default function ManageDqRulesTable() {
   // const [data, setData] = useState(() => makeUsersData(5_000));
@@ -114,10 +114,25 @@ export default function ManageDqRulesTable() {
                                     desc: " 🔽",
                                   }[header.column.getIsSorted()] ?? null} */}
                                   {{
-                                    asc: <ArrowLongUpIcon aria-hidden="true" className="mr-3 h-5 w-5 text-gray-400" />,
-                                    desc: <ArrowLongDownIcon aria-hidden="true" className="mr-3 h-5 w-5 text-gray-400" />,
+                                    asc: (
+                                      <ArrowLongUpIcon
+                                        aria-hidden="true"
+                                        className="mr-3 h-5 w-5 text-gray-400"
+                                      />
+                                    ),
+                                    desc: (
+                                      <ArrowLongDownIcon
+                                        aria-hidden="true"
+                                        className="mr-3 h-5 w-5 text-gray-400"
+                                      />
+                                    ),
                                   }[header.column.getIsSorted()] ?? null}
                                 </div>
+                                {header.column.getCanFilter() ? (
+                                  <div>
+                                    <Filter column={header.column} />
+                                  </div>
+                                ) : null}
                               </>
                             )}
                           </th>
