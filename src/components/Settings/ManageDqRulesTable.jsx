@@ -9,12 +9,20 @@ import {
 import { useMemo, useState } from "react";
 import { makeData, makeUsersData, makeDqRules } from "./makeData";
 import Pagination from "../common/Pagination";
-import { ArrowLongDownIcon, ArrowLongUpIcon } from "@heroicons/react/20/solid";
+import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import Filter from "../common/Filter";
 
 export default function ManageDqRulesTable() {
   // const [data, setData] = useState(() => makeUsersData(5_000));
   const [data, setData] = useState(() => makeDqRules());
+  const editRow = (ruleId) => {
+    console.log("Edit", ruleId);
+    // Implement edit functionality here
+  };
+  const deleteRow = (ruleId) => {
+    console.log("Delete", ruleId);
+    // Implement delete functionality here
+  };
   const columns = useMemo(
     () => [
       {
@@ -37,6 +45,20 @@ export default function ManageDqRulesTable() {
       {
         accessorKey: "active",
         header: () => "Active",
+      },
+       {
+        id: "actions",
+        header: "",
+        cell: ({ row }) => (
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button onClick={() => editRow(row.original.ruleId)}>
+              <PencilIcon className="h-5 w-5 text-blue-500" />
+            </button>
+            <button onClick={() => deleteRow(row.original.ruleId)}>
+              <TrashIcon className="h-5 w-5 text-red-500" />
+            </button>
+          </div>
+        ),
       },
     ],
     []
