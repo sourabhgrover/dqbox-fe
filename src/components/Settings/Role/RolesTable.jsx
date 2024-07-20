@@ -7,13 +7,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import Pagination from "../common/Pagination";
-import { usersData } from "../common/makeData";
+import { manageRole } from "../../common/makeData";
 import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
-import Filter from "../common/Filter";
+import Filter from "../../common/Filter";
+import Pagination from "../../common/Pagination";
 
-export default function ManageUsersTable() {
-  const [data, setData] = useState(usersData());
+export default function RolesTable() {
+  const [data, setData] = useState(manageRole());
   const editRow = (ruleId) => {
     console.log("Edit", ruleId);
     // Implement edit functionality here
@@ -25,22 +25,14 @@ export default function ManageUsersTable() {
   const columns = useMemo(
     () => [
       {
-        accessorKey: "username",
+        accessorKey: "name",
         cell: (info) => info.getValue(),
-        header: () => <span>Username</span>,
+        header: () => <span>Role</span>,
       },
       {
-        accessorKey: "firstName",
-        header: "First Name",
-      },
-      {
-        accessorKey: "lastName",
-        header: "Last Name",
-      },
-      {
-        accessorKey: "roles",
-        header: () => "Roles",
-        cell: ({ row }) => row.original.roles.map(role => role.name).join(', ')
+        accessorKey: "permissions",
+        header: () => "Permissions",
+        cell: ({ row }) => row.original.permissions.map(role => role.name).join(', ')
       },
       {
         id: "actions",

@@ -1579,3 +1579,83 @@ export function getDQKPI(){
         }
     ]
 }
+
+export function usersData(){
+    return [
+        {
+            "id": 8,
+            "username": "Admin",
+            "firstName": "Sandra",
+            "lastName": "Johnson",
+            "password": null,
+            "roles": [
+                {
+                    "id": 1,
+                    "name": "Admin",
+                    "permissions": null
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "username": "Test",
+            "firstName": "Test User First Name1",
+            "lastName": "Test User Last Name1",
+            "password": null,
+            "roles": [
+                {
+                    "id": 1,
+                    "name": "Admin",
+                    "permissions": null
+                },
+                {
+                    "id": 11,
+                    "name": "NewRole",
+                    "permissions": null
+                }
+            ]
+        }
+    ]
+}
+
+export function manageRole(){
+    return [
+        {
+            "id": 1,
+            "name": "Admin",
+            "permissions": [
+                {
+                    "id": 1,
+                    "name": "DQScore"
+                },
+                {
+                    "id": 2,
+                    "name": "DQDrill"
+                },
+                {
+                    "id": 3,
+                    "name": "Compare"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "User",
+            "permissions": []
+        },
+        {
+            "id": 11,
+            "name": "NewRole",
+            "permissions": [
+                {
+                    "id": 2,
+                    "name": "DQDrill"
+                },
+                {
+                    "id": 3,
+                    "name": "Compare"
+                }
+            ]
+        }
+    ]
+}

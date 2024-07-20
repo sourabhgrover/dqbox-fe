@@ -2,7 +2,7 @@ import { useState } from "react";
 import ManageUsers from "../components/Settings/ManageUsers";
 import ManageDQRules from "../components/Settings/ManageDQRules";
 import ManageDefaultingRules from "../components/Settings/ManageDefaultingRules";
-import ManageRole from "../components/Settings/ManageRole";
+import ManageRole from "../components/Settings/Role/ManageRole";
 
 const initialTabs = [
   { name: 'Manage Users', href: '#', current: true , content: <ManageUsers /> },
