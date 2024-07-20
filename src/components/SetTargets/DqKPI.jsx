@@ -1,125 +1,38 @@
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import React from 'react'
-
-const columnHelper = createColumnHelper()
-
-const columns = [
-  columnHelper.accessor('firstName', {
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor(row => row.lastName, {
-    id: 'lastName',
-    cell: info => <i>{info.getValue()}</i>,
-    header: () => <span>Last Name</span>,
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('age', {
-    header: () => 'Age',
-    cell: info => info.renderValue(),
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('visits', {
-    header: () => <span>Visits</span>,
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('status', {
-    header: 'Status',
-    footer: info => info.column.id,
-  }),
-  columnHelper.accessor('progress', {
-    header: 'Profile Progress',
-    footer: info => info.column.id,
-  }),
-]
-
-const defaultData = [
-  {
-    firstName: 'tanner',
-    lastName: 'linsley',
-    age: 24,
-    visits: 100,
-    status: 'In Relationship',
-    progress: 50,
-  },
-  {
-    firstName: 'tandy',
-    lastName: 'miller',
-    age: 40,
-    visits: 40,
-    status: 'Single',
-    progress: 80,
-  },
-  {
-    firstName: 'joe',
-    lastName: 'dirte',
-    age: 45,
-    visits: 20,
-    status: 'Complicated',
-    progress: 10,
-  },
-]
+import { useState } from "react"
+import ManageDqKPITable from "./ManageDqKPITable"
+import CustomModal from "../common/CustomModal"
+import DqKPIForm from "./DqKPIForm"
 
 const DqKPI = () => {
-  const [data, _setData] = React.useState(() => [...defaultData])
-  const rerender = React.useReducer(() => ({}), {})[1]
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  })
+  const [open, setOpen] = useState(false)
+
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
   return (
-    <div className="p-2">
-      <table>
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          {table.getFooterGroups().map(footerGroup => (
-            <tr key={footerGroup.id}>
-              {footerGroup.headers.map(header => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.footer,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
-      </table>
-      <div className="h-4" />
-      <button onClick={() => rerender()} className="border p-2">
-        Rerender
-      </button>
+    <>
+    <div className="px-4 sm:px-6 lg:px-8">
+      <div className="sm:flex sm:items-center">
+        <div className="sm:flex-auto">
+          <h1 className="text-base font-semibold leading-6 text-gray-900">
+            Manage DQ KPIs
+          </h1>
+        </div>
+        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+          <button
+            type="button"
+            onClick={handleOpen}
+            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Add DQ KPIs
+          </button>
+        </div>
+      </div>
+    <ManageDqKPITable />
+    <CustomModal open={open} onClose={handleClose}>
+      <DqKPIForm />
+    </CustomModal>
     </div>
+    </>
   )
 }
 

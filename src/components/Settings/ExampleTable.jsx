@@ -216,6 +216,9 @@ const ExampleTable = () => {
         </select>
       </div>
       <div>{table.getPrePaginationRowModel().rows.length} Rows</div>
+      <button onClick={() => rerender()} className="border p-2">
+        Rerender
+      </button>
       <div>
         <button onClick={() => rerender()}>Force Rerender</button>
       </div>
