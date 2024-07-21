@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DataProcessing from "../components/ControlFlow/DataProcessing/DataProcessing";
-import GeneralOutput from "../components/ControlFlow/GeneralOutput";
+import GeneralOutput from "../components/ControlFlow/GeneralOutput/GeneralOutput";
 import ViewRunLog from "../components/ControlFlow/RunLog/ViewRunLog";
 import UploadFiles from "../components/ControlFlow/UploadFiles/UploadFiles";
 
