@@ -1,5 +1,6 @@
 import React from "react";
 import LogsTable from "./LogsTable";
+import CustomDatePicker from "../../common/CustomDatePicker";
 
 const ViewRunLog = () => {
   return (
@@ -10,15 +11,19 @@ const ViewRunLog = () => {
             View Run Log
           </h1>
         </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button
-            type="button"
-            onClick={() => {}}
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Upload Files
-          </button>
+      </div>
+      <div className="sm:flex items-center mt-4 gap-4">
+        <div className="">
+          Reporting Reference Date:
         </div>
+        <CustomDatePicker />
+        <button
+          type="button"
+          onClick={() => {}}
+          className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          View Log
+        </button>
       </div>
       <LogsTable />
     </div>
