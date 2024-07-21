@@ -48,6 +48,16 @@ export default function DefaultingRulesTable() {
       {
         accessorKey: "active",
         header: () => "Active",
+        cell: ({ row }) => (
+          <div style={{ display: 'flex',   gap: '10px' }}>
+           <input
+              type="checkbox"
+              aria-describedby="candidates-description"
+              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+              checked={row.original.active}
+            />
+          </div>
+        ),
       },
       {
         id: "actions",
