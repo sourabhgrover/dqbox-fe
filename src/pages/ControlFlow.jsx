@@ -2,7 +2,7 @@ import { useState } from "react";
 import DataProcessing from "../components/ControlFlow/DataProcessing";
 import GeneralOutput from "../components/ControlFlow/GeneralOutput";
 import ViewRunLog from "../components/ControlFlow/ViewRunLog";
-import UploadFiles from "../components/ControlFlow/UploadFiles";
+import UploadFiles from "../components/ControlFlow/UploadFiles/UploadFiles";
 
 const initialTabs = [
   { name: 'Upload Files', href: '#', current: true , content: <UploadFiles /> },
