@@ -27,7 +27,7 @@ const DqKPI = () => {
           </button>
         </div>
       </div>
-    <ManageDqKPITable />
+    <ManageDqKPITable handleOpen={handleOpen} />
     <CustomModal open={open} onClose={handleClose}>
       <DqKPIForm />
     </CustomModal>

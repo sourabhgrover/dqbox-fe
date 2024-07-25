@@ -12,10 +12,12 @@ import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@hero
 import Filter from "../common/Filter";
 import { getDQKPI } from "../common/makeData";
 
-export default function ManageDqKPITable() {
+export default function ManageDqKPITable(prop) {
+  const {handleOpen} = prop;
   const [data, setData] = useState(() => getDQKPI());
   const editRow = (ruleId) => {
     console.log("Edit", ruleId);
+    handleOpen();
     // Implement edit functionality here
   };
   const deleteRow = (ruleId) => {
