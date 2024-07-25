@@ -30,7 +30,7 @@ const ManageUsers = () => {
         </button>
       </div>
     </div>
-  <ManageUsersTable />
+  <ManageUsersTable  />
   <CustomModal open={open} onClose={handleClose}>
     <ManageUsersForm />
   </CustomModal>
