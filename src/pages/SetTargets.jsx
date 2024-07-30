@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DqKPI from "../components/SetTargets/DqKPI";
+import SimpleBar from "simplebar-react";
 
 const initialTabs = [
   { name: 'Manage DQ KPIs', href: '#', current: true , content: <DqKPI /> },
@@ -75,7 +76,9 @@ export default function SetTargets() {
           (tab) =>
             tab.name === currentTab && (
               <div key={tab.name}>
+                <SimpleBar className='max-h-[65vh]'>
                 <div>{tab.content}</div>
+                </SimpleBar>
               </div>
             )
         )}

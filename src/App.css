@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +39,27 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
+/* Apply the font family to your dashboard */
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
 }
+
+/* Example of applying different fonts to different elements */
+/* h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+p, div, span, a {
+    font-family: 'Open Sans', sans-serif;
+} */
+

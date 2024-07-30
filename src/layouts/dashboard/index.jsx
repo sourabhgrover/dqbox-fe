@@ -312,7 +312,7 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
 
-          <main className="py-10">
+          <main className="py-2">
             <div className="px-4 sm:px-6 lg:px-8">
                 {/* Your content */}
                 {children}
