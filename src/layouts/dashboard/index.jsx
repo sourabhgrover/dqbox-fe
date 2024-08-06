@@ -11,27 +11,16 @@ import {
 } from '@headlessui/react'
 import {
   Bars3Icon,
-  BellIcon,
-  CalendarIcon,
-  ChartPieIcon,
+
   Cog6ToothIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
+
   XMarkIcon,
-} from '@heroicons/react/24/outline'
+  } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 import TopBar from './TopBar'
+import { initialNavigation } from '../../constants'
 
-const initialNavigation = [
-  { name: 'DQScore', href: '#', icon: HomeIcon, current: true },
-  { name: 'DQDrill', href: '#', icon: UsersIcon, current: false },
-  { name: 'Compare', href: '#', icon: FolderIcon, current: false },
-  { name: 'Set Targets', href: 'set-targets', icon: CalendarIcon, current: false },
-  { name: 'Settings', href: 'settings', icon: DocumentDuplicateIcon, current: false },
-  { name: 'Control Flow', href: 'control-flow', icon: ChartPieIcon, current: false },
-]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
