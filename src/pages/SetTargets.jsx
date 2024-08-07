@@ -75,9 +75,9 @@ export default function SetTargets() {
         {tabs.map(
           (tab) =>
             tab.name === currentTab && (
-              <div key={tab.name}>
+              <div key={tab.name} className="px-2">
                 <SimpleBar className='max-h-[65vh]'>
-                <div>{tab.content}</div>
+                {tab.content}
                 </SimpleBar>
               </div>
             )

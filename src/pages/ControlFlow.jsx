@@ -3,6 +3,7 @@ import DataProcessing from "../components/ControlFlow/DataProcessing/DataProcess
 import GeneralOutput from "../components/ControlFlow/GeneralOutput/GeneralOutput";
 import ViewRunLog from "../components/ControlFlow/RunLog/ViewRunLog";
 import UploadFiles from "../components/ControlFlow/UploadFiles/UploadFiles";
+import SimpleBar from "simplebar-react";
 
 const initialTabs = [
   { name: 'Upload Files', href: '#', current: true , content: <UploadFiles /> },
@@ -87,7 +88,9 @@ export default function ContorlFlow() {
             tab.name === currentTab && (
               // <div key={tab.name} className="px-4 sm:px-6 lg:px-8">
               <div key={tab.name} className="px-2">
+                <SimpleBar className='max-h-[65vh]'>
                 {tab.content}
+                </SimpleBar>
               </div>
             )
         )}
