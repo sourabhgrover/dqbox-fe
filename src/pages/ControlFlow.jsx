@@ -85,8 +85,9 @@ export default function ContorlFlow() {
         {tabs.map(
           (tab) =>
             tab.name === currentTab && (
-              <div key={tab.name}>
-                <p>{tab.content}</p>
+              // <div key={tab.name} className="px-4 sm:px-6 lg:px-8">
+              <div key={tab.name} className="px-2">
+                {tab.content}
               </div>
             )
         )}
