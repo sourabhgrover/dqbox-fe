@@ -3,6 +3,7 @@ import ManageUsers from "../components/Settings/ManageUsers";
 import ManageDQRules from "../components/Settings/ManageDQRules";
 import ManageDefaultingRules from "../components/Settings/DefaultingRules/ManageDefaultingRules";
 import ManageRole from "../components/Settings/Role/ManageRole";
+import SimpleBar from "simplebar-react";
 
 const initialTabs = [
   { name: 'Manage Users', href: '#', current: true , content: <ManageUsers /> },
@@ -85,8 +86,11 @@ export default function Settings() {
         {tabs.map(
           (tab) =>
             tab.name === currentTab && (
-              <div key={tab.name}>
-                <p>{tab.content}</p>
+              // <div key={tab.name} className="px-4 sm:px-6 lg:px-8">
+              <div key={tab.name} className="px-2">
+                <SimpleBar className='max-h-[65vh]'>
+                {tab.content}
+                </SimpleBar>
               </div>
             )
         )}

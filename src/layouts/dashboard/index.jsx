@@ -11,27 +11,18 @@ import {
 } from '@headlessui/react'
 import {
   Bars3Icon,
-  BellIcon,
-  CalendarIcon,
-  ChartPieIcon,
+
   Cog6ToothIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
+
   XMarkIcon,
-} from '@heroicons/react/24/outline'
+  } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 import TopBar from './TopBar'
+import { initialNavigation } from '../../constants'
+// import logo from '../../assets/logo-black.svg'
+import logo from '../../assets/logo-no-background.svg'
 
-const initialNavigation = [
-  { name: 'DQScore', href: '#', icon: HomeIcon, current: true },
-  { name: 'DQDrill', href: '#', icon: UsersIcon, current: false },
-  { name: 'Compare', href: '#', icon: FolderIcon, current: false },
-  { name: 'Set Targets', href: 'set-targets', icon: CalendarIcon, current: false },
-  { name: 'Settings', href: 'settings', icon: DocumentDuplicateIcon, current: false },
-  { name: 'Control Flow', href: 'control-flow', icon: ChartPieIcon, current: false },
-]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -76,9 +67,10 @@ export default function DashboardLayout({ children }) {
               <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
                 <div className="flex h-16 shrink-0 items-center">
                   <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
+                    className="h-20 w-auto"
+                    // src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src={logo}
+                    alt="DQBox"
                   />
                 </div>
                 <nav className="flex flex-1 flex-col">
@@ -136,11 +128,12 @@ export default function DashboardLayout({ children }) {
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
-            <div className="flex h-16 shrink-0 items-center">
+            <div className="flex h-16 shrink-0 justify-around items-center">
               <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
+                className="h-28 w-auto"
+                // src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                src={logo}
+                alt="DQBox"
               />
             </div>
             <nav className="flex flex-1 flex-col">
