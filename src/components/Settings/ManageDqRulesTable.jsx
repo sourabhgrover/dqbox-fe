@@ -11,10 +11,12 @@ import { makeData, makeUsersData, makeDqRules } from "./makeData";
 import Pagination from "../common/Pagination";
 import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import Filter from "../common/Filter";
+import { useSelector } from "react-redux";
 
 export default function ManageDqRulesTable() {
-  // const [data, setData] = useState(() => makeUsersData(5_000));
-  const [data, setData] = useState(() => makeDqRules());
+  
+  // const [data, setData] = useState(() => makeDqRules());
+  const {dqRules:data} = useSelector((state) => state.settings);
   const editRow = (ruleId) => {
     console.log("Edit", ruleId);
     // Implement edit functionality here

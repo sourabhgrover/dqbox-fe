@@ -11,9 +11,11 @@ import { defaultingRules } from "../../common/makeData";
 import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import Filter from "../../common/Filter";
 import Pagination from "../../common/Pagination";
+import { useSelector } from "react-redux";
 
 export default function DefaultingRulesTable() {
-  const [data, setData] = useState(defaultingRules());
+  // const [data, setData] = useState(defaultingRules());
+  const {defaultingRules:data} = useSelector((state) => state.settings);
   const editRow = (ruleId) => {
     console.log("Edit", ruleId);
     // Implement edit functionality here

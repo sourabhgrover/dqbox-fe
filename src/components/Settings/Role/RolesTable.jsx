@@ -11,9 +11,11 @@ import { manageRole } from "../../common/makeData";
 import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import Filter from "../../common/Filter";
 import Pagination from "../../common/Pagination";
+import { useSelector } from "react-redux";
 
 export default function RolesTable() {
-  const [data, setData] = useState(manageRole());
+  // const [data, setData] = useState(manageRole());
+  const {roles:data} = useSelector((state) => state.settings);
   const editRow = (ruleId) => {
     console.log("Edit", ruleId);
     // Implement edit functionality here

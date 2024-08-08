@@ -11,9 +11,11 @@ import Pagination from "../common/Pagination";
 import { usersData } from "../common/makeData";
 import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import Filter from "../common/Filter";
+import { useSelector } from "react-redux";
 
 export default function ManageUsersTable() {
-  const [data, setData] = useState(usersData());
+  const { users:data} = useSelector((state) => state.settings);
+  // const [data, setData] = useState(usersData());
   const editRow = (ruleId) => {
     console.log("Edit", ruleId);
     // Implement edit functionality here
