@@ -11,10 +11,12 @@ import Pagination from "../common/Pagination";
 import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import Filter from "../common/Filter";
 import { getDQKPI } from "../common/makeData";
+import { useSelector } from "react-redux";
 
 export default function ManageDqKPITable(prop) {
   const {handleOpen} = prop;
-  const [data, setData] = useState(() => getDQKPI());
+  const {dqKpi:data}  = useSelector((state) => state.dqKpi);
+  // const [data, setData] = useState(() => getDQKPI());
   const editRow = (ruleId) => {
     console.log("Edit", ruleId);
     handleOpen();

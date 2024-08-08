@@ -39,7 +39,6 @@ export default function DashboardLayout({ children }) {
       )
     );
   }, [location.pathname]);
-  console.log(navigation);
 
   const handleNavigationClick = (name) => {
     setSidebarOpen(false)
