@@ -1,9 +1,10 @@
 import React from 'react';
+import NoResultFound from './NoResultFound';
 
 function Pagination({ table }) {
   
   if (table.getRowCount() === 0) {
-    return <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">No Data</div>; // Do not render the component if there are no records
+  return <NoResultFound />
   }
 
   return (
