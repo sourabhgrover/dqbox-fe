@@ -1,14 +1,13 @@
 import { useState } from "react";
 import DqKPI from "../components/SetTargets/DqKPI";
 import SimpleBar from "simplebar-react";
+import { classNames } from "../utils/utils";
 
 const initialTabs = [
   { name: 'Manage DQ KPIs', href: '#', current: true , content: <DqKPI /> },
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+
 
 export default function SetTargets() {
 

@@ -2,6 +2,7 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Radio, RadioGroup, Switch } from "@headlessui/react";
 import { useState } from "react";
 import CustomDatePicker from "../common/CustomDatePicker";
+import { classNames } from "../../utils/utils";
 
 const memoryOptions = [
   { name: "MONTHLY", inStock: true },
@@ -21,9 +22,7 @@ const kpiLevelOptions = [
   { name: "BOOKING_OFFICE", inStock: true },
   { name: "SYSTEM_RULE", inStock: true },
 ];
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 
 export default function DqKPIForm() {
   const [enabled, setEnabled] = useState(false);

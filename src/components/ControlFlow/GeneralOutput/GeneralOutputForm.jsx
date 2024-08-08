@@ -3,6 +3,7 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import CustomDatePicker from "../../common/CustomDatePicker";
 import { Radio, RadioGroup } from "@headlessui/react";
+import { classNames } from "../../../utils/utils";
 
 const memoryOptions = [
   { name: "AnaCredit", inStock: true },
@@ -22,9 +23,7 @@ const agent = [
   { name: "NL101", inStock: true },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 
 export default function GeneralOutputForm() {
   const [enabled, setEnabled] = useState(false);

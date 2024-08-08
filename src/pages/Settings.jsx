@@ -4,6 +4,7 @@ import ManageDQRules from "../components/Settings/ManageDQRules";
 import ManageDefaultingRules from "../components/Settings/DefaultingRules/ManageDefaultingRules";
 import ManageRole from "../components/Settings/Role/ManageRole";
 import SimpleBar from "simplebar-react";
+import { classNames } from "../utils/utils";
 
 const initialTabs = [
   { name: 'Manage Users', href: '#', current: true , content: <ManageUsers /> },
@@ -12,9 +13,7 @@ const initialTabs = [
   { name: 'Manage Defaulting Rules', href: '#', current: false , content: <ManageDefaultingRules />},
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+
 
 export default function Settings() {
 

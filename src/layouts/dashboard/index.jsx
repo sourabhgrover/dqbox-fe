@@ -21,12 +21,10 @@ import TopBar from './TopBar'
 import { initialNavigation } from '../../constants'
 // import logo from '../../assets/logo-black.svg'
 import logo from '../../assets/logo-no-background.svg'
+import { classNames } from '../../utils/utils'
 
 
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)

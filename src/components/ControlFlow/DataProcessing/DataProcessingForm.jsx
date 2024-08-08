@@ -3,6 +3,7 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import CustomDatePicker from "../../common/CustomDatePicker";
 import { Radio, RadioGroup } from "@headlessui/react";
+import { classNames } from "../../../utils/utils";
 
 const memoryOptions = [
   { name: "BIRD Input Layer", inStock: true },
@@ -10,9 +11,7 @@ const memoryOptions = [
   { name: "Don't Trigger Processing Layer", inStock: true },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 
 export default function DataProcessingForm() {
   const [enabled, setEnabled] = useState(false);

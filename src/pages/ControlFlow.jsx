@@ -4,6 +4,7 @@ import GeneralOutput from "../components/ControlFlow/GeneralOutput/GeneralOutput
 import ViewRunLog from "../components/ControlFlow/RunLog/ViewRunLog";
 import UploadFiles from "../components/ControlFlow/UploadFiles/UploadFiles";
 import SimpleBar from "simplebar-react";
+import { classNames } from "../utils/utils";
 
 const initialTabs = [
   { name: 'Upload Files', href: '#', current: true , content: <UploadFiles /> },
@@ -12,9 +13,7 @@ const initialTabs = [
   { name: 'View Run Log', href: '#', current: false , content: <ViewRunLog />},
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+
 
 export default function ContorlFlow() {
 
