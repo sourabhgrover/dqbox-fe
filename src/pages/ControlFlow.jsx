@@ -42,11 +42,10 @@ export default function ContorlFlow() {
         <label htmlFor="tabs" className="sr-only">
           Select a tab
         </label>
-        {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
         <select
           id="tabs"
           name="tabs"
-          defaultValue={tabs.find((tab) => tab.current).name}
+          // defaultValue={tabs.find((tab) => tab.current).name}
           value={currentTab}
           onChange={(e) => handleTabClick(e.target.value)}
           className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -86,7 +85,7 @@ export default function ContorlFlow() {
           (tab) =>
             tab.name === currentTab && (
               // <div key={tab.name} className="px-4 sm:px-6 lg:px-8">
-              <div key={tab.name} className="px-2">
+              <div key={tab.name} className="px-3">
                 <SimpleBar className='max-h-[65vh]'>
                 {tab.content}
                 </SimpleBar>

@@ -5,7 +5,7 @@ import UploadForm from './UploadForm'
 import UploadFilesTable from './UploadFilesTable'
 import { toast } from 'react-toastify'
 
-const ManageDefaultingRules = () => {
+const UploadFiles = () => {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(true)
@@ -39,5 +39,5 @@ const ManageDefaultingRules = () => {
   )
 }
 
-export default ManageDefaultingRules
+export default UploadFiles
 
