@@ -7,15 +7,14 @@ import { BellIcon } from "@heroicons/react/24/outline";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 import { Link } from "react-router-dom";
+import { classNames } from "../../utils/utils";
 
 const userNavigation = [
   { name: "Your profile", href: "#" },
   { name: "Sign out", href: "login" },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 
 const TopBar = () => {
   return (

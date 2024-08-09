@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -16,21 +16,29 @@ import {
 
   XMarkIcon,
   } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import TopBar from './TopBar'
 import { initialNavigation } from '../../constants'
-// import logo from '../../assets/logo-black.svg'
+
 import logo from '../../assets/logo-no-background.svg'
+import { classNames } from '../../utils/utils'
 
 
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [navigation, setNavigation] = useState(initialNavigation);
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    setNavigation((prevNavigation) =>
+      prevNavigation.map((item) =>
+        item.href === currentPath ? { ...item, current: true } : { ...item, current: false }
+      )
+    );
+  }, [location.pathname]);
 
   const handleNavigationClick = (name) => {
     setSidebarOpen(false)

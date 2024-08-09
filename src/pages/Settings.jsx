@@ -4,6 +4,7 @@ import ManageDQRules from "../components/Settings/ManageDQRules";
 import ManageDefaultingRules from "../components/Settings/DefaultingRules/ManageDefaultingRules";
 import ManageRole from "../components/Settings/Role/ManageRole";
 import SimpleBar from "simplebar-react";
+import { classNames } from "../utils/utils";
 
 const initialTabs = [
   { name: 'Manage Users', href: '#', current: true , content: <ManageUsers /> },
@@ -12,9 +13,7 @@ const initialTabs = [
   { name: 'Manage Defaulting Rules', href: '#', current: false , content: <ManageDefaultingRules />},
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+
 
 export default function Settings() {
 
@@ -47,7 +46,7 @@ export default function Settings() {
         <select
           id="tabs"
           name="tabs"
-          defaultValue={tabs.find((tab) => tab.current).name}
+          // defaultValue={tabs.find((tab) => tab.current).name}
           value={currentTab}
           onChange={(e) => handleTabClick(e.target.value)}
           className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -87,7 +86,7 @@ export default function Settings() {
           (tab) =>
             tab.name === currentTab && (
               // <div key={tab.name} className="px-4 sm:px-6 lg:px-8">
-              <div key={tab.name} className="px-2">
+              <div key={tab.name} className="px-3">
                 <SimpleBar className='max-h-[65vh]'>
                 {tab.content}
                 </SimpleBar>

@@ -13,19 +13,19 @@ export const initialNavigation = [
   { name: "Compare", href: "#", icon: FolderIcon, current: false },
   {
     name: "Set Targets",
-    href: "set-targets",
+    href: "/set-targets",
     icon: CalendarIcon,
     current: false,
   },
   {
     name: "Settings",
-    href: "settings",
+    href: "/settings",
     icon: DocumentDuplicateIcon,
     current: false,
   },
   {
     name: "Control Flow",
-    href: "control-flow",
+    href: "/control-flow",
     icon: ChartPieIcon,
     current: false,
   },
