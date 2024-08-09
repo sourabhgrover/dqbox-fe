@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import CustomModal from '../../common/CustomModal'
 import UploadForm from './UploadForm'
 import UploadFilesTable from './UploadFilesTable'
+import { toast } from 'react-toastify'
 
 const ManageDefaultingRules = () => {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const notify = () => toast.success("Wow so easy!");
 
   return (
     <>
@@ -22,6 +24,7 @@ const ManageDefaultingRules = () => {
         <button
           type="button"
           onClick={handleOpen}
+          // onClick={notify}
           className="primary-btn"
         >
           Upload Files
