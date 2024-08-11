@@ -2,6 +2,7 @@ import { useState } from "react";
 import DqKPI from "../components/SetTargets/DqKPI";
 import SimpleBar from "simplebar-react";
 import { classNames } from "../utils/utils";
+import { useGetPostsQuery } from "../utils/apiSlice";
 
 const initialTabs = [
   { name: 'Manage DQ KPIs', href: '#', current: true , content: <DqKPI /> },
@@ -12,6 +13,8 @@ const initialTabs = [
 export default function SetTargets() {
 
   const [tabs, setTabs] = useState(initialTabs);
+  const { data, error, isLoading } = useGetPostsQuery();
+  console.log(data, error, isLoading);
 
   const handleTabClick = (tabName) => {
     setTabs((prevTabs) =>

@@ -6,15 +6,24 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Pagination from "../common/Pagination";
 import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import Filter from "../common/Filter";
 import { getDQKPI } from "../common/makeData";
 import { useSelector } from "react-redux";
+import apiClient from "../../utils/apiClient";
 
 export default function ManageDqKPITable(prop) {
   const {handleOpen} = prop;
+  useEffect(() => {
+    apiClient.get('/posts').then((response) => {
+      console.log(response.data);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }, [])
+  
   const {dqKpi:data}  = useSelector((state) => state.dqKpi);
   // const [data, setData] = useState(() => getDQKPI());
   const editRow = (ruleId) => {

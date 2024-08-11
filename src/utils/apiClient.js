@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'https://api.example.com', // Replace with your API base URL
+  baseURL: 'http://localhost:3000/', // Replace with your API base URL
   timeout: 10000, // Timeout in milliseconds
   headers: {
     'Content-Type': 'application/json',
@@ -14,10 +14,10 @@ apiClient.interceptors.request.use(
   (config) => {
     // Modify request config before sending the request
     // For example, add an authorization token
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // const token = localStorage.getItem('token');
+    // if (token) {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // }
     return config;
   },
   (error) => {
