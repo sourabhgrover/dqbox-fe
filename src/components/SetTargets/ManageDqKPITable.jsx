@@ -13,18 +13,22 @@ import Filter from "../common/Filter";
 import { getDQKPI } from "../common/makeData";
 import { useSelector } from "react-redux";
 import apiClient from "../../utils/apiClient";
+import { useGetDQKPIQuery } from "../../utils/apiSlice";
 
 export default function ManageDqKPITable(prop) {
   const {handleOpen} = prop;
-  useEffect(() => {
-    apiClient.get('/posts').then((response) => {
-      console.log(response.data);
-    }).catch((error) => {
-      console.log(error);
-    })
-  }, [])
+  // useEffect(() => {
+  //   apiClient.get('/posts').then((response) => {
+  //     console.log(response.data);
+  //   }).catch((error) => {
+  //     console.log(error);
+  //   })
+  // }, [])
+
+  const { data  = [], error, isLoading } = useGetDQKPIQuery();
+  console.log(data, error, isLoading);
   
-  const {dqKpi:data}  = useSelector((state) => state.dqKpi);
+  // const {dqKpi:data}  = useSelector((state) => state.dqKpi);
   // const [data, setData] = useState(() => getDQKPI());
   const editRow = (ruleId) => {
     console.log("Edit", ruleId);
@@ -164,28 +168,38 @@ export default function ManageDqKPITable(prop) {
                   ))}
                 </thead>
                 <tbody>
-                  {table.getRowModel().rows.map((row) => {
-                    return (
-                      <tr key={row.id}>
-                        {row.getVisibleCells().map((cell) => {
-                          return (
-                            <td
-                              key={cell.id}
-                              className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                            >
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
-                              )}
-                            </td>
-                          );
-                        })}
+                  {
+                    isLoading ? (
+                      <tr>
+                        <td colSpan={table.getHeaderGroups().length}>
+                          <span>Loading</span>
+                        </td>
                       </tr>
-                    );
-                  })}
+                    ) : (
+                      table.getRowModel().rows.map((row) => {
+                      return (
+                        <tr key={row.id}>
+                          {row.getVisibleCells().map((cell) => {
+                            return (
+                              <td
+                                key={cell.id}
+                                className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                              >
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      );
+                    }
+                  ))
+                  }
                 </tbody>
               </table>
-              <Pagination table={table} />
+              { !isLoading  && <Pagination table={table} /> }
             </div>
           </div>
         </div>

@@ -7,7 +7,10 @@ export const apiSlice = createApi({
         getPosts: builder.query({
             query: () => `posts`,
         }),
+        getDQKPI: builder.query({
+           query: () => `dqKpi`, 
+        })
     }),
 });
 
-export const { useGetPostsQuery } = apiSlice;
+export const { useGetPostsQuery , useGetDQKPIQuery } = apiSlice;

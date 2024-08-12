@@ -9,5 +9,82 @@
     ],
     "profile": {
       "name": "typicode"
-    }
+    },
+    "dqKpi" : [
+      {
+          "id": 2,
+          "kpiId": "KPI_DQ_COMP_1",
+          "kpiName": "Completeness KPI for Reporting Agent NL 101",
+          "kpiTrackingFreq": "MONTHLY",
+          "kpiObject": "NL1001",
+          "kpiOwner": "Alex Bla",
+          "kpiLevel": "REPORTING_AGENT",
+          "kpiType": "COMPLETENESS",
+          "validFrom": "2019-01-01T00:00:00",
+          "validTo": "2099-01-01T00:00:00",
+          "active": true,
+          "reasonForDeactivation": "Reason",
+          "kpiTargetValue": "0.9"
+      },
+      {
+          "id": 3,
+          "kpiId": "KPI_DQ_COMP_2",
+          "kpiName": "Completeness KPI for Observed Agent NL 101",
+          "kpiTrackingFreq": "QUARTERLY",
+          "kpiObject": "NL1001",
+          "kpiOwner": "Alex Bla",
+          "kpiLevel": "OBSERVED_AGENT",
+          "kpiType": "COMPLETENESS",
+          "validFrom": "2019-01-01T00:00:00",
+          "validTo": "2099-01-01T00:00:00",
+          "active": true,
+          "reasonForDeactivation": "Reason",
+          "kpiTargetValue": "0.8"
+      },
+      {
+          "id": 4,
+          "kpiId": "KPI_DQ_COMP_3",
+          "kpiName": "Completeness KPI for Booking Office A100",
+          "kpiTrackingFreq": "YEARLY",
+          "kpiObject": "R002",
+          "kpiOwner": "Alex Bla",
+          "kpiLevel": "bo_cd",
+          "kpiType": "COMPLETENESS",
+          "validFrom": "2019-01-01T00:00:00",
+          "validTo": "2099-01-01T00:00:00",
+          "active": true,
+          "reasonForDeactivation": "Reason",
+          "kpiTargetValue": "0.5"
+      },
+      {
+          "id": 5,
+          "kpiId": "KPI_DQ_COMP_4",
+          "kpiName": "Completeness KPI for GDM",
+          "kpiTrackingFreq": "QUARTERLY",
+          "kpiObject": "GDM",
+          "kpiOwner": "Alex Bla",
+          "kpiLevel": "src_sys_cd",
+          "kpiType": "COMPLETENESS",
+          "validFrom": "2019-01-01T00:00:00",
+          "validTo": "2099-01-01T00:00:00",
+          "active": true,
+          "reasonForDeactivation": "Reason",
+          "kpiTargetValue": "0.8"
+      },
+      {
+          "id": 6,
+          "kpiId": "KPI_DQ_COMP_5",
+          "kpiName": "Completeness KPI for RULE RULE_001",
+          "kpiTrackingFreq": "QUARTERLY",
+          "kpiObject": "RULE_001",
+          "kpiOwner": "Alex Bla",
+          "kpiLevel": "REPORTING_AGENT",
+          "kpiType": "COMPLETENESS",
+          "validFrom": "2019-01-01T00:00:00",
+          "validTo": "2099-01-01T00:00:00",
+          "active": true,
+          "reasonForDeactivation": "Reason",
+          "kpiTargetValue": "0.8"
+      }
+  ]
   }
