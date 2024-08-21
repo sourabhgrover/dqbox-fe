@@ -17,14 +17,49 @@ import { useGetDQKPIQuery } from "../../utils/apiSlice";
 
 export default function ManageDqKPITable(prop) {
   const {handleOpen} = prop;
+  let createBody = {
+    "kpiLevel": "OBSERVED_AGENT",
+    "kpiType": "CONSISTENCY",
+    "kpiTrackingFreq": "MONTHLY",
+    "kpiId": "Test1",
+    "kpiName": "test1",
+    "kpiOwner": "Test User",
+    "kpiObject": "KPI Object",
+    "kpiTargetValue": "KPI Target",
+    "validFrom": "2024-08-12T18:30:00.000Z",
+    "validTo": "2024-08-14T18:30:00.000Z",
+    "reasonForDeactivation": "No reason"
+}
+let editBody = {
+  "kpiLevel": "OBSERVED_AGENT",
+  "kpiType": "CONSISTENCY",
+  "kpiTrackingFreq": "MONTHLY",
+  "kpiId": "Test1",
+  "kpiName": "TestKPIName",
+  "kpiOwner": "Test User",
+  "kpiObject": "KPI Object",
+  "kpiTargetValue": "KPI Target",
+  "validFrom": "2024-08-12T18:30:00.000Z",
+  "validTo": "2024-08-14T18:30:00.000Z",
+  "reasonForDeactivation": "No reason"
+}
   // useEffect(() => {
-  //   apiClient.get('/posts').then((response) => {
+  //   apiClient.post('/dqKpi',{...createBody})
+  //   .then((response) => {
   //     console.log(response.data);
   //   }).catch((error) => {
   //     console.log(error);
   //   })
   // }, [])
 
+  // useEffect(() => {
+  //   apiClient.put('/dqKpi/01ec',{...editBody})
+  //   .then((response) => {
+  //     console.log(response.data);
+  //   }).catch((error) => {
+  //     console.log(error);
+  //   })
+  // }, [])
   const { data  = [], error, isLoading } = useGetDQKPIQuery();
   console.log(data, error, isLoading);
   

@@ -1,8 +1,27 @@
-# React + Vite
+To run the application locally, follow these steps:
+# Getting Started
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Step 1: Open your terminal and navigate to the project directory.
 
-Currently, two official plugins are available:
+## Step 2: Start the JSON server
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Run the following command to start the JSON server:
+```
+npx json-server ./db.json
+```
+
+## Step 3: Open a new terminal window
+
+Once the JSON server is running, open a new terminal window.
+
+## Step 4: Start the application
+
+In the new terminal window, run the following command to start the application:
+```
+npm run dev
+```
+
+## Step 5: Verify the application
+
+The application should now be running locally.
+
