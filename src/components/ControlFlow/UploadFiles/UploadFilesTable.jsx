@@ -8,12 +8,14 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { defaultingRules } from "../../common/makeData";
-import { ArrowLongDownIcon, ArrowLongUpIcon ,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
+import { ArrowLongDownIcon, ArrowLongUpIcon ,EyeIcon,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import Filter from "../../common/Filter";
 import Pagination from "../../common/Pagination";
+import { useGetBlobsQuery } from "../../../utils/apiSlice";
 
 export default function UploadFilesTable() {
-  const [data, setData] = useState([]);
+  const { data  = [], error, isLoading } = useGetBlobsQuery();
+  // const [data, setData] = useState([]);
   const editRow = (ruleId) => {
     console.log("Edit", ruleId);
     // Implement edit functionality here
@@ -25,33 +27,17 @@ export default function UploadFilesTable() {
   const columns = useMemo(
     () => [
       {
-        accessorKey: "entityName",
+        accessorKey: "name",
         cell: (info) => info.getValue(),
-        header: () => <span>Entity Name</span>,
+        header: () => <span>File Name</span>,
       },
       {
-        accessorKey: "ruleType",
-        header: () => "Refrence Date",
+        accessorKey: "properties.createdOn",
+        header: () => "Created Date",
       },
       {
-        accessorKey: "srcCubeId",
-        header: () => "Data Layer",
-      },
-      {
-        accessorKey: "srcCubeAttribute",
-        header: () => "Calling Component",
-      },
-      {
-        accessorKey: "tgtCubeId",
-        header: () => "Processing Status",
-      },
-      {
-        accessorKey: "active",
-        header: () => "Start Date Time",
-      },
-      {
-        accessorKey: "active",
-        header: () => "End Date Time",
+        accessorKey: "properties.lastModified",
+        header: () => "Modfiied Date",
       },
       {
         id: "actions",
@@ -59,11 +45,11 @@ export default function UploadFilesTable() {
         cell: ({ row }) => (
           <div style={{ display: 'flex', gap: '10px' }}>
             <button onClick={() => editRow(row.original.id)}>
-              <PencilIcon className="h-5 w-5 text-blue-500" />
+              <EyeIcon className="h-5 w-5 text-blue-500" />
             </button>
-            <button onClick={() => deleteRow(row.original.id)}>
+            {/* <button onClick={() => deleteRow(row.original.id)}>
               <TrashIcon className="h-5 w-5 text-red-500" />
-            </button>
+            </button> */}
           </div>
         ),
       },

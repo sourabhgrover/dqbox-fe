@@ -33,7 +33,7 @@ const UploadFiles = () => {
     </div>
   <UploadFilesTable />
   <CustomModal open={open} onClose={handleClose}>
-    <UploadForm />
+    <UploadForm handleClose={handleClose} />
   </CustomModal>
   </>
   )

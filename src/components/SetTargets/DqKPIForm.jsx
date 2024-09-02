@@ -3,8 +3,10 @@ import { Radio, RadioGroup, Switch } from "@headlessui/react";
 import { useState } from "react";
 import CustomDatePicker from "../common/CustomDatePicker";
 import { classNames } from "../../utils/utils";
+import { useForm } from "react-hook-form";
+import { data } from "autoprefixer";
 
-const memoryOptions = [
+const layersOptions = [
   { name: "MONTHLY", inStock: true },
   { name: "QUATERLY", inStock: true },
   { name: "YEARLY", inStock: true },
@@ -26,10 +28,15 @@ const kpiLevelOptions = [
 
 export default function DqKPIForm() {
   const [enabled, setEnabled] = useState(false);
-  const [mem, setMem] = useState(memoryOptions[2]);
+  const [kpiTrackingFreq, setkpiTrackingFreq] = useState(layersOptions[2]);
   const [kpiType, setKpiType] = useState(kpiTypeOptions[2]);
+
+  const {register,handleSubmit,watch,formState : {errors}} = useForm();
+  const onSubmit = data => console.log(data);
+  console.log(watch("kpiTrackingFreq"));
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -39,37 +46,39 @@ export default function DqKPIForm() {
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3 sm:col-start-1">
               <label
-                htmlFor="city"
+                htmlFor="kpiId"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 KPI ID
               </label>
               <div className="mt-2">
                 <input
-                  id="city"
-                  name="city"
+                  id="kpiId"
+                  // name="kpiId"
                   type="text"
-                  autoComplete="address-level2"
+                  {...register("kpiId",{required:true , message:"This field is required heya"})}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {errors.kpiId && <span>This field is required</span>}
               </div>
             </div>
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="region"
+                htmlFor="kpiName"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 KPI Name
               </label>
               <div className="mt-2">
                 <input
-                  id="region"
-                  name="region"
+                  id="kpiName"
                   type="text"
+                  {...register("kpiName",{required:true})}
                   autoComplete="address-level1"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {errors.kpiName && <span>This field is required</span>}
               </div>
             </div>
             <div className="col-span-full">
@@ -78,20 +87,15 @@ export default function DqKPIForm() {
                   <div className="text-sm font-medium leading-6 text-gray-900">
                     Processing Layer:
                   </div>
-                  {/* <a
-                    href="#"
-                    className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
-                  >
-                    See performance specs
-                  </a> */}
                 </div>
 
                 <RadioGroup
-                  value={mem}
-                  onChange={setMem}
+                  value={kpiTrackingFreq}
+                  onChange={setkpiTrackingFreq}
+                  // {...register('kpiTrackingFreq')}
                   className="mt-2 grid grid-cols-3 gap-3 sm:grid-cols-6"
                 >
-                  {memoryOptions.map((option) => (
+                  {layersOptions.map((option) => (
                     <Radio
                       key={option.name}
                       value={option}
@@ -143,20 +147,20 @@ export default function DqKPIForm() {
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="region"
+                htmlFor="kpiOwner"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 KPI Owner
               </label>
               <div className="mt-2">
                 <input
-                  id="region"
-                  name="region"
+                  id="kpiOwner"
+                  {...register("kpiOwner",{required:true})}
                   type="text"
-                  autoComplete="address-level1"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.kpiOwner && <span>This field is required</span>}
             </div>
 
             <div className="col-span-full">
@@ -168,8 +172,8 @@ export default function DqKPIForm() {
                 </div>
 
                 <RadioGroup
-                  value={mem}
-                  onChange={setMem}
+                  // value={mem}
+                  // onChange={setMem}
                   className="mt-2 grid grid-cols-3 gap-3 sm:grid-cols-4"
                 >
                   {kpiLevelOptions.map((option) => (
@@ -193,75 +197,41 @@ export default function DqKPIForm() {
 
             <div className="sm:col-span-3 sm:col-start-1">
               <label
-                htmlFor="city"
+                htmlFor="kpiObject"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 KPI Object
               </label>
               <div className="mt-2">
                 <input
-                  id="city"
-                  name="city"
+                  id="kpiObject"
+                  {...register("kpiObject",{required:true})}
                   type="text"
-                  autoComplete="address-level2"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.kpiObject && <span>This field is required</span>}
             </div>
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="region"
+                htmlFor="kpiTargetValue"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 KPI Target Value
               </label>
               <div className="mt-2">
                 <input
-                  id="region"
-                  name="region"
+                  id="kpiTargetValue"
+                  {...register("kpiTargetValue",{required:true})}
                   type="text"
-                  autoComplete="address-level1"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.kpiTargetValue && <span>This field is required</span>}
             </div>
 
-            <div className="sm:col-span-3 sm:col-start-1">
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                KPI Object
-              </label>
-              <div className="mt-2">
-                <input
-                  id="city"
-                  name="city"
-                  type="text"
-                  autoComplete="address-level2"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="region"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                KPI Target Value
-              </label>
-              <div className="mt-2">
-                <input
-                  id="region"
-                  name="region"
-                  type="text"
-                  autoComplete="address-level1"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
+        
 
             <div className="sm:col-span-2 sm:col-start-1">
               <label
@@ -319,15 +289,15 @@ export default function DqKPIForm() {
 
             <div className="col-span-full">
               <label
-                htmlFor="about"
+                htmlFor="reasonForDeactivation"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Reason For Deactivation
               </label>
               <div className="mt-2">
                 <textarea
-                  id="about"
-                  name="about"
+                  id="reasonForDeactivation"
+                  {...register("reasonForDeactivation")}
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   defaultValue={""}

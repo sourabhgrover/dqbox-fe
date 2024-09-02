@@ -1,8 +1,46 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { useGetBlobsQuery, useUploadFileMutation } from "../../../utils/apiSlice";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
-export default function UploadForm() {
+export default function UploadForm(props) {
+  const { handleClose } = props;
+  const [uploadFile, { isLoading, isError, isSuccess, error }] = useUploadFileMutation();
+  const { refetch } = useGetBlobsQuery();
+  const [file, setFile] = useState(null);
+  const hasCalledHandleClose = useRef(false);
+  console.log(isLoading, isError, isSuccess, error);
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  useEffect(() => {
+    if (isSuccess && !hasCalledHandleClose.current) {
+      toast.success("File uploaded successfully");
+      handleClose();
+      refetch();
+      hasCalledHandleClose.current = true;
+    }
+  }, [isSuccess, handleClose]);
+  const handleSubmit = async (e) => {
+    console.log("File", file);
+    e.preventDefault();
+    if (!file) {
+      console.error('No file selected');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+        await uploadFile(formData).unwrap();
+        setFile(null);
+    } catch (err) {
+        console.error('Failed to create post: ', err);
+    }
+};
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -31,6 +69,7 @@ export default function UploadForm() {
                         name="file-upload"
                         type="file"
                         className="sr-only"
+                        onChange={handleFileChange}
                       />
                     </label>
                     <p className="pl-1">or drag and drop</p>
@@ -49,10 +88,12 @@ export default function UploadForm() {
         <button
           type="button"
           className="text-sm font-semibold leading-6 text-gray-900"
+          onClick={handleClose}
         >
           Cancel
         </button>
         <button
+          disabled={isLoading}
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
