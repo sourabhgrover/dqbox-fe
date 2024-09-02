@@ -19,8 +19,11 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: file,
             }),
-        }) 
+        }),
+        getFileSchemaByName: builder.query({
+            query: (fileName) => `blobs/read-xlsx/${fileName}`,
+        }), 
     }),
 });
 
-export const { useGetPostsQuery , useGetDQKPIQuery , useGetBlobsQuery , useUploadFileMutation } = apiSlice;
+export const { useGetPostsQuery , useGetDQKPIQuery , useGetBlobsQuery , useUploadFileMutation , useGetFileSchemaByNameQuery} = apiSlice;

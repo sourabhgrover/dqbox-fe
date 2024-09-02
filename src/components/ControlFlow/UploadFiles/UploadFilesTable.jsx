@@ -11,14 +11,19 @@ import { defaultingRules } from "../../common/makeData";
 import { ArrowLongDownIcon, ArrowLongUpIcon ,EyeIcon,PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import Filter from "../../common/Filter";
 import Pagination from "../../common/Pagination";
-import { useGetBlobsQuery } from "../../../utils/apiSlice";
+import { useGetBlobsQuery, useGetFileSchemaByNameQuery } from "../../../utils/apiSlice";
 
 export default function UploadFilesTable() {
   const { data  = [], error, isLoading } = useGetBlobsQuery();
+  const [selectedFileName, setSelectedFileName] = useState(null);
+  const { data: fileSchema } = useGetFileSchemaByNameQuery(selectedFileName, {
+    skip: !selectedFileName,
+  });
   // const [data, setData] = useState([]);
-  const editRow = (ruleId) => {
-    console.log("Edit", ruleId);
+  const editRow = (selectedData) => {
+    console.log("selectedData", selectedData);
     // Implement edit functionality here
+    setSelectedFileName(selectedData.name);
   };
   const deleteRow = (ruleId) => {
     console.log("Delete", ruleId);
@@ -44,7 +49,7 @@ export default function UploadFilesTable() {
         header: "",
         cell: ({ row }) => (
           <div style={{ display: 'flex', gap: '10px' }}>
-            <button onClick={() => editRow(row.original.id)}>
+            <button onClick={() => editRow(row.original)}>
               <EyeIcon className="h-5 w-5 text-blue-500" />
             </button>
             {/* <button onClick={() => deleteRow(row.original.id)}>
