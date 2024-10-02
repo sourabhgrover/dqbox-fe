@@ -5,12 +5,14 @@ import ManageDefaultingRules from "../components/Settings/DefaultingRules/Manage
 import ManageRole from "../components/Settings/Role/ManageRole";
 import SimpleBar from "simplebar-react";
 import { classNames } from "../utils/utils";
+import Connections from "./Connections";
 
 const initialTabs = [
   { name: 'Manage Users', href: '#', current: true , content: <ManageUsers /> },
   { name: 'Manage Role', href: '#', current: false, content: <ManageRole /> },
   { name: 'Manage DQ Rules', href: '#', current: false , content: <ManageDQRules /> },
   { name: 'Manage Defaulting Rules', href: '#', current: false , content: <ManageDefaultingRules />},
+  { name: 'Connections', href: '#', current: false , content: <Connections />},
 ]
 
 
