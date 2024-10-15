@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Outlet, Navigate, useRoutes } from "react-router-dom";
 import DashboardLayout from "../layouts/dashboard";
+import ConnectionForm from "../components/Settings/Connections/ConnectionForm";
 
 export const Login = lazy(() => import("../pages/login"));
 export const Home = lazy(() => import("../pages/home"));
@@ -29,6 +30,7 @@ export default function Router() {
         { path: 'settings', element: <Settings /> },
         { path: 'set-targets', element: <SetTargets /> },
         { path: 'control-flow', element: <ControlFlow /> },
+        { path: 'connection', element: <ConnectionForm /> },
       ],
     },
     {

@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { createConnection } from '../../../store/connections';
-import { toast, useToast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
     name: yup.string().required('Name is required'),
@@ -68,6 +68,7 @@ const ConnectionForm = () => {
   });
 
   useEffect(() => {
+    console.log('ConnectionForm mounted',status);
     if (status === 'success') {
       toast.success('Connection created successfully');
     }
@@ -88,6 +89,7 @@ const ConnectionForm = () => {
   useEffect(() => {
     setConnectionType(type);
   }, [type]); // This will update connectionType whenever type changes
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

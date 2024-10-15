@@ -5,41 +5,72 @@ import { handleAxiosError } from "../utils/utils";
 const initialState = {
   status: "idle",
   error: "",
-  data: {},
+  data: [],
 };
 
 export const createConnection = createAsyncThunk(
   "connections/createConnection",
-  async (payload,thunkAPI) => {
+  async (payload, thunkAPI) => {
     console.log(payload);
     try {
-        const response = await apiClient.post(`connections`, payload);
-        console.log(response.data);
-        return response.data;
-      } catch (error) {
-        console.log(error);
-        return thunkAPI.rejectWithValue(handleAxiosError(error));
-      }
+      const response = await apiClient.post(`connections`, payload);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(handleAxiosError(error));
+    }
+  }
+);
+
+export const fetchConnections = createAsyncThunk(
+  "connections/fetchConnections",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiClient.get(`connections`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(handleAxiosError(error));
+    }
   }
 );
 
 const connections = createSlice({
   name: "connections",
   initialState,
-  reducers: {},
+  reducers: {
+    resetConnectionState: () => initialState,
+  },
   extraReducers: (buider) => {
-    buider.addCase(createConnection.pending, (state) => {
+    buider
+      .addCase(createConnection.pending, (state) => {
         state.status = "loading";
-    });
-    buider.addCase(createConnection.fulfilled, (state) => {
+      })
+      .addCase(createConnection.fulfilled, (state) => {
         state.status = "success";
-    });
-    buider.addCase(createConnection.rejected, (state,action) => {
+      })
+      .addCase(createConnection.rejected, (state, action) => {
         state.status = "failed";
         state.error =
-          action.payload?.message || "Unable to create connection, please try again";
-    });
-  }
+          action.payload?.message ||
+          "Unable to create connection, please try again";
+      });
+      buider
+      .addCase(fetchConnections.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchConnections.fulfilled, (state,action) => {
+        state.status = "success";
+        state.data = action.payload;
+      })
+      .addCase(fetchConnections.rejected, (state, action) => {
+        state.status = "failed";
+        state.error =
+          action.payload?.message ||
+          "Unable to create connection, please try again";
+      });
+  },
 });
 
+export const { resetConnectionState  } = connections.actions;
 export default connections.reducer;
