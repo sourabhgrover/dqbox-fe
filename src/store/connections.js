@@ -6,6 +6,7 @@ const initialState = {
   status: "idle",
   error: "",
   data: [],
+  selectedData: {},
 };
 
 export const createConnection = createAsyncThunk(
@@ -28,6 +29,19 @@ export const fetchConnections = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await apiClient.get(`connections`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(handleAxiosError(error));
+    }
+  }
+);
+
+export const fetchConnectionById = createAsyncThunk(
+  "connections/fetchConnectionById",
+  async (id, thunkAPI) => {
+    try {
+      const response = await apiClient.get(`connections/${id}`);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(handleAxiosError(error));
@@ -68,6 +82,20 @@ const connections = createSlice({
         state.error =
           action.payload?.message ||
           "Unable to create connection, please try again";
+      });
+      buider
+      .addCase(fetchConnectionById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchConnectionById.fulfilled, (state,action) => {
+        state.status = "success";
+        state.selectedData = action.payload;
+      })
+      .addCase(fetchConnectionById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error =
+          action.payload?.message ||
+          "Unable to fetch data, please try again";
       });
   },
 });

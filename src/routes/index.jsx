@@ -31,6 +31,7 @@ export default function Router() {
         { path: 'set-targets', element: <SetTargets /> },
         { path: 'control-flow', element: <ControlFlow /> },
         { path: 'connection', element: <ConnectionForm /> },
+        { path: 'connection/:id', element: <ConnectionForm /> },
       ],
     },
     {

@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { createConnection } from '../../../store/connections';
+import { createConnection, fetchConnectionById } from '../../../store/connections';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 const schema = yup.object().shape({
     name: yup.string().required('Name is required'),
@@ -55,13 +56,17 @@ const schema = yup.object().shape({
   
 
 const ConnectionForm = () => {
-  const [connectionType, setConnectionType] = useState('');
   const dispatch = useDispatch();
-  const { status, error } = useSelector((state) => state.connections);
+  const [connectionType, setConnectionType] = useState('');
+  const [isEditing, setIsEditing] = useState(false); // Toggle for view/edit mode
+  
+  const { id } = useParams(); // Get ID from route params
+  const { status, error , selectedData } = useSelector((state) => state.connections);
   const {
     register,
     handleSubmit,
     watch,
+    setValue, // For setting field values when loading data
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -77,6 +82,25 @@ const ConnectionForm = () => {
       toast.error(error);
     }
   }, [status]);
+
+
+
+  // Fetch connection data if ID is present (view/edit mode)
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchConnectionById(id));
+    }
+  }, [id, dispatch]);
+
+  // Populate form fields when connection data is fetched
+  useEffect(() => {
+    if (selectedData && id) {
+      setValue('name', selectedData.name);
+      setValue('type', selectedData.type);
+      setConnectionType(selectedData.type);
+      // Set other fields similarly...
+    }
+  }, [selectedData, id, setValue]);
 
   const onSubmit = (data) => {
     console.log(data);
