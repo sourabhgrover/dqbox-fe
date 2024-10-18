@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createConnection,
   fetchConnectionById,
+  resetConnectionState,
+  updateConnection,
 } from "../../../store/connections";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import CustomSpinner from "../../common/CustomSpinner";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -62,15 +64,16 @@ const ConnectionForm = () => {
   const dispatch = useDispatch();
   const [connectionType, setConnectionType] = useState("");
   const [isEditing, setIsEditing] = useState(false); // Toggle for view/edit mode
+  const { status, error, selectedData, fetchConnectionStatus } = useSelector(
+    (state) => state.connections
+  );
 
   const { id } = useParams(); // Get ID from route params
 
   const isDisabled = !isEditing && !!id; // Disable logic
   const disabledClass =
     !isEditing && !!id ? "bg-gray-100 cursor-not-allowed" : "";
-  const { status, error, selectedData } = useSelector(
-    (state) => state.connections
-  );
+
   const {
     register,
     handleSubmit,
@@ -81,22 +84,10 @@ const ConnectionForm = () => {
     resolver: yupResolver(schema),
   });
 
-  // useEffect(() => {
-  //   console.log('ConnectionForm mounted',status);
-  //   if (status === 'success') {
-  //     toast.success('Connection created successfully');
-  //   }
-  //   if(status === 'failed') {
-  //     // Handle error
-  //     toast.error(error);
-  //   }
-  // }, [status]);
-
   // Handle status changes (success or failure)
   useEffect(() => {
     if (status === "success") {
-      toast.success(`${isEditing ? "Updated" : "Created"} successfully`);
-      // onClose(); // Close the form after success
+      toast.success(`Connection ${isEditing ? "updated" : "created"} successfully`);
     } else if (status === "failed") {
       toast.error(error);
     }
@@ -106,6 +97,10 @@ const ConnectionForm = () => {
   useEffect(() => {
     if (id) {
       dispatch(fetchConnectionById(id));
+    }
+    return () => {
+      console.log("Cleanup");
+      dispatch(resetConnectionState());
     }
   }, [id, dispatch]);
 
@@ -141,7 +136,16 @@ const ConnectionForm = () => {
       }
 
       // Dispatch the action to create a connection
-      await dispatch(createConnection(formData));
+      // await dispatch(createConnection(formData));
+
+      // Dispatch the appropriate action based on edit mode
+      if (id) {
+        await dispatch(updateConnection({ id, formData }));
+        // toast.success("Connection updated successfully");
+      } else {
+        await dispatch(createConnection(formData));
+        // toast.success("Connection created successfully");
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Failed to upload files");
@@ -158,33 +162,36 @@ const ConnectionForm = () => {
 
   const handleDelete = (id) => {
     console.log("Delete connection with ID:", id);
-  }
+  };
 
   const handleCancel = () => {
     // Clear the form (optional) and navigate away
-    if(isEditing) {
+    if (isEditing) {
       setIsEditing(false); // Exit edit mode
     }
     reset(); // Resets the form fields to their default values
     // Navigate back to the previous page (if using React Router)
     // history.goBack(); // Uncomment if you are using history for navigation
   };
-  
+
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto bg-white p-6 shadow-md rounded-lg"
-    >
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Name */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Name</label>
-          <input
-            {...register("name")}
-            disabled={isDisabled} // Disable if not in edit mode
-            type="text"
-            className={`border rounded w-full py-2 px-3 text-gray-700 
+    <>
+      {fetchConnectionStatus === "loading" && <CustomSpinner />}
+      {fetchConnectionStatus !== "loading" && (
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mx-auto bg-white p-6 shadow-md rounded-lg"
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="mb-4">
+              <label className="block text-gray-700 font-bold mb-2">
+                Connection Name
+              </label>
+              <input
+                {...register("name")}
+                disabled={isDisabled} // Disable if not in edit mode
+                type="text"
+                className={`border rounded w-full py-2 px-3 text-gray-700 
             ${errors.name ? "border-red-500" : "border-gray-300"} 
             ${
               isDisabled
@@ -192,216 +199,236 @@ const ConnectionForm = () => {
                 : "border-gray-300"
             } 
             `}
-          />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-          )}
-        </div>
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
 
-        {/* Type */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Type</label>
-          <select
-            {...register("type")}
-            onChange={(e) => setConnectionType(e.target.value)}
-            disabled={isDisabled}
-            className={`border ${
-              errors.type ? "border-red-500" : "border-gray-300"
-            } 
+            {/* Type */}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-bold mb-2">
+                Connection Type
+              </label>
+              <select
+                {...register("type")}
+                onChange={(e) => setConnectionType(e.target.value)}
+                disabled={isDisabled}
+                className={`border ${
+                  errors.type ? "border-red-500" : "border-gray-300"
+                } 
             rounded w-full py-2 px-3 text-gray-700`}
-          >
-            <option value="">Select Type</option>
-            <option value="excel">Excel</option>
-            <option value="csv">CSV</option>
-            <option value="database">Database</option>
-          </select>
-          {errors.type && (
-            <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>
-          )}
-        </div>
+              >
+                <option value="">Select Type</option>
+                <option value="excel">Excel</option>
+                <option value="csv">CSV</option>
+                <option value="database">Database</option>
+              </select>
+              {errors.type && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.type.message}
+                </p>
+              )}
+            </div>
 
-        {/* Render File if Available */}
-        {selectedData?.fileUrl && (
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Uploaded File
-            </label>
-            <a
-              href={selectedData.fileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 underline"
-            >
-              View/Download File
-            </a>
-          </div>
-        )}
-        {/* File Input (only for Excel or CSV) */}
-        {connectionType === "excel" || connectionType === "csv" ? (
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">File</label>
-            <input
-              {...register("file")}
-              type="file"
-              disabled={isDisabled}
-              className={`border ${
-                errors.file ? "border-red-500" : "border-gray-300"
-              } 
-              rounded w-full py-2 px-3 text-gray-700`}
-            />
-            {errors.file && (
-              <p className="text-red-500 text-sm mt-1">{errors.file.message}</p>
+            {/* Render File if Available */}
+            {selectedData?.fileUrl && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">
+                  Uploaded File
+                </label>
+                <a
+                  href={selectedData.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline"
+                >
+                  View/Download File
+                </a>
+              </div>
             )}
-          </div>
-        ) : null}
+            {/* File Input (only for Excel or CSV) */}
+            {connectionType === "excel" || connectionType === "csv" ? (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">
+                  Upload Connection
+                </label>
+                <input
+                  {...register("file")}
+                  type="file"
+                  disabled={isDisabled}
+                  className={`border ${
+                    errors.file ? "border-red-500" : "border-gray-300"
+                  } 
+              rounded w-full py-2 px-3 text-gray-700`}
+                />
+                {errors.file && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.file.message}
+                  </p>
+                )}
+              </div>
+            ) : null}
 
-        {/* Database Fields (only for Database type) */}
-        {connectionType === "database" && (
-          <>
+            {/* Database Fields (only for Database type) */}
+            {connectionType === "database" && (
+              <>
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-bold mb-2">
+                    Database URL
+                  </label>
+                  <input
+                    {...register("dbUrl")}
+                    type="text"
+                    disabled={isDisabled}
+                    className={`border ${
+                      errors.dbUrl ? "border-red-500" : "border-gray-300"
+                    } 
+                rounded w-full py-2 px-3 text-gray-700 ${disabledClass}`}
+                  />
+                  {errors.dbUrl && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.dbUrl.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-bold mb-2">
+                    Auth Type
+                  </label>
+                  <input
+                    {...register("authType")}
+                    type="text"
+                    disabled={isDisabled}
+                    className={`border ${
+                      errors.authType ? "border-red-500" : "border-gray-300"
+                    } 
+                rounded w-full py-2 px-3 text-gray-700 ${disabledClass}`}
+                  />
+                  {errors.authType && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.authType.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-bold mb-2">
+                    Username
+                  </label>
+                  <input
+                    {...register("username")}
+                    type="text"
+                    disabled={isDisabled}
+                    className={`border ${
+                      errors.username ? "border-red-500" : "border-gray-300"
+                    } 
+                rounded w-full py-2 px-3 text-gray-700 ${disabledClass}`}
+                  />
+                  {errors.username && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.username.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-bold mb-2">
+                    Password
+                  </label>
+                  <input
+                    {...register("password")}
+                    type="password"
+                    disabled={isDisabled}
+                    className={`border ${
+                      errors.password ? "border-red-500" : "border-gray-300"
+                    } 
+                rounded w-full py-2 px-3 text-gray-700 ${disabledClass}`}
+                  />
+                  {errors.password && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.password.message}
+                    </p>
+                  )}
+                </div>
+              </>
+            )}
+
+            {/* Render Logo if Available */}
+            {selectedData?.logoUrl && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">
+                  Logo
+                </label>
+                <img
+                  src={selectedData.logoUrl}
+                  alt="Connection Logo"
+                  className="w-32 h-32 object-contain"
+                />
+              </div>
+            )}
+
+            {/* Logo (Optional) */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Database URL
-              </label>
+              <label className="block text-gray-700 font-bold mb-2">Logo</label>
               <input
-                {...register("dbUrl")}
-                type="text"
+                {...register("logo")}
+                type="file"
                 disabled={isDisabled}
                 className={`border ${
-                  errors.dbUrl ? "border-red-500" : "border-gray-300"
+                  errors.logo ? "border-red-500" : "border-gray-300"
                 } 
-                rounded w-full py-2 px-3 text-gray-700 ${disabledClass}`}
-              />
-              {errors.dbUrl && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.dbUrl.message}
-                </p>
-              )}
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Auth Type
-              </label>
-              <input
-                {...register("authType")}
-                type="text"
-                disabled={isDisabled}
-                className={`border ${
-                  errors.authType ? "border-red-500" : "border-gray-300"
-                } 
-                rounded w-full py-2 px-3 text-gray-700 ${disabledClass}`}
-              />
-              {errors.authType && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.authType.message}
-                </p>
-              )}
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Username
-              </label>
-              <input
-                {...register("username")}
-                type="text"
-                disabled={isDisabled}
-                className={`border ${
-                  errors.username ? "border-red-500" : "border-gray-300"
-                } 
-                rounded w-full py-2 px-3 text-gray-700 ${disabledClass}`}
-              />
-              {errors.username && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.username.message}
-                </p>
-              )}
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Password
-              </label>
-              <input
-                {...register("password")}
-                type="password"
-                disabled={isDisabled}
-                className={`border ${
-                  errors.password ? "border-red-500" : "border-gray-300"
-                } 
-                rounded w-full py-2 px-3 text-gray-700 ${disabledClass}`}
-              />
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-          </>
-        )}
-
-        {/* Render Logo if Available */}
-        {selectedData?.logoUrl && (
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Logo</label>
-            <img
-              src={selectedData.logoUrl}
-              alt="Connection Logo"
-              className="w-32 h-32 object-contain"
-            />
-          </div>
-        )}
-
-        {/* Logo (Optional) */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Logo</label>
-          <input
-            {...register("logo")}
-            type="file"
-            disabled={isDisabled}
-            className={`border ${
-              errors.logo ? "border-red-500" : "border-gray-300"
-            } 
             rounded w-full py-2 px-3 text-gray-700 ${disabledClass}`}
-          />
-        </div>
-      </div>
-      <div className="mt-6 flex flex-1  gap-4 justify-end">
-        {/* Delete Button in Top-Right Corner */}
-      {id && (
-        <button
-          type="button"
-          onClick={() => handleDelete(id)}
-          className="bg-red-500 text-white py-2 px-4 rounded 
+              />
+            </div>
+          </div>
+          <div className="mt-6 flex flex-1  gap-4 justify-end">
+            {/* Delete Button in Top-Right Corner */}
+            {id && (
+              <button
+                type="button"
+                onClick={() => handleDelete(id)}
+                className="bg-red-500 text-white py-2 px-4 rounded 
                     hover:bg-red-700 shadow-lg"
-        >
-          Delete
-        </button>
-      )}
-        {id && !isEditing && (
-          <button
-            type="button"
-            onClick={() => setIsEditing(true)}
-            className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-700"
-          >
-            Edit
-          </button>
-        )}
+              >
+                Delete
+              </button>
+            )}
+            {id && !isEditing && (
+              <button
+                type="button"
+                onClick={() => setIsEditing(true)}
+                className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-700"
+              >
+                Edit
+              </button>
+            )}
 
-        {(isEditing || !id) && (
-          <>
-          <button type="button" onClick={handleCancel} className="bg-gray-400 hover:bg-gray-500 py-2 px-4 rounded text-white">Cancel</button>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-          >
-            {id ? "Update" : "Create"}
-          </button>
-          </>
-        )}
-        {/* Submit Button */}
-      </div>
-    </form>
+            {(isEditing || !id) && (
+              <>
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="bg-gray-400 hover:bg-gray-500 py-2 px-4 rounded text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+                >
+                  {id ? "Update" : "Create"}
+                </button>
+              </>
+            )}
+            {/* Submit Button */}
+          </div>
+        </form>
+      )}
+    </>
   );
 };
 
