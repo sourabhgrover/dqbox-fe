@@ -8,9 +8,9 @@ import {
 } from "@heroicons/react/24/outline";
 
 export const initialNavigation = [
-  { name: "DQScore", href: "#", icon: HomeIcon, current: true },
-  { name: "DQDrill", href: "#", icon: UsersIcon, current: false },
-  { name: "Compare", href: "#", icon: FolderIcon, current: false },
+  // { name: "DQScore", href: "#", icon: HomeIcon, current: true },
+  // { name: "DQDrill", href: "#", icon: UsersIcon, current: false },
+  // { name: "Compare", href: "#", icon: FolderIcon, current: false },
   {
     name: "Set Targets",
     href: "/set-targets",
@@ -26,6 +26,12 @@ export const initialNavigation = [
   {
     name: "Control Flow",
     href: "/control-flow",
+    icon: ChartPieIcon,
+    current: false,
+  },
+  {
+    name: "Mapping Designer",
+    href: "/mapping-designer",
     icon: ChartPieIcon,
     current: false,
   },
